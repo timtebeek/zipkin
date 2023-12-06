@@ -45,8 +45,10 @@ public class MetricsBenchmarks {
   static final int MEDIUM_SPAN = 1000;
   static final int SHORT_SPAN = 500;
   private MeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-  private InMemoryCollectorMetrics inMemoryCollectorMetrics = new InMemoryCollectorMetrics();
-  private MicrometerCollectorMetrics micrometerCollectorMetrics = new MicrometerCollectorMetrics(registry);
+  private InMemoryCollectorMetrics inMemoryCollectorMetrics = new InMemoryCollectorMetrics()
+    .forTransport("jmh");
+  private MicrometerCollectorMetrics micrometerCollectorMetrics = new MicrometerCollectorMetrics(registry)
+    .forTransport("jmh");
 
   @Benchmark
   public int incrementBytes_longSpans_inMemory() {
